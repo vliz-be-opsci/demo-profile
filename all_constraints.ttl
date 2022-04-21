@@ -1,0 +1,103 @@
+@prefix dash: <http://datashapes.org/dash#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <http://example.com/ns#> .
+schema:DatasetShape
+    a sh:NodeShape ;
+    sh:targetClass schema:Dataset ;
+    sh:property [
+        sh:severity sh:Violation;
+        sh:path schema:publisher ;
+        sh:minCount 1 ;
+    ];
+    sh:property [
+        sh:severity sh:Violation;
+        sh:path schema:license ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ];
+    sh:property [
+        sh:severity sh:Warning;
+        sh:path schema:about ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ]
+.
+
+schema:FileShape
+    a sh:NodeShape ;
+    sh:targetClass schema:File;
+    sh:property [
+        sh:severity sh:Violation;
+        sh:path schema:fileFormat ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ];
+    sh:property [
+        sh:severity sh:Violation;
+        sh:path schema:contentSize ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ];
+    sh:property [
+        sh:severity sh:Violation;
+        sh:path schema:license ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "License must be specified" ;
+        sh:in ( "CC BY" "CC0" "CC BY-SA" "CC BY-ND" "CC BY-NC" "CC BY-NC-SA" "CC BY-NC-ND" ) ;
+    ];
+    sh:property [
+        sh:severity sh:Warning;
+        sh:path schema:creator ;
+        sh:minCount 1 ;
+        sh:message "Creator must be specified and must be a person" ;
+    ];
+    sh:rule [
+            a sh:TripleRule ;
+        sh:subject sh:this ;
+        sh:predicate rdf:type ;
+        sh:object schema:JSONFile ;
+        sh:condition [
+            sh:property  [
+                sh:path schema:fileFormat;
+                sh:hasValue 'json';
+            ];
+        ];
+    ];
+    sh:rule [
+            a sh:TripleRule ;
+        sh:subject sh:this ;
+        sh:predicate rdf:type ;
+        sh:object schema:CSVFile ;
+        sh:condition [
+            sh:property  [
+                sh:path schema:fileFormat;
+                sh:hasValue 'csv';
+            ];
+        ];
+    ]
+.
+
+schema:JSONFileShape
+    a sh:NodeShape ;
+    sh:targetClass schema:JSONFile ;
+    sh:property [
+        sh:severity sh:Violation;
+        sh:path schema:version ;
+        sh:minCount 1 ;
+    ]
+.
+
+schema:CSVFileShape
+    a sh:NodeShape ;
+    sh:targetClass schema:CSVFile ;
+    sh:property [
+        sh:severity sh:Violation;
+        sh:path schema:version ;
+        sh:minCount 1 ;
+    ]
+.
