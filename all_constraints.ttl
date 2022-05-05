@@ -2,6 +2,7 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <http://schema.org/> .
+@prefix bioschema: <http://bioschemas.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix ex: <http://example.com/ns#> .
@@ -14,22 +15,75 @@ schema:DatasetShape
         sh:minCount 1 ;
     ];
     sh:property [
+        sh:severity sh:warning ;
+        sh:path schema:temporalCoverage ;
+        sh:minCount 1 ;
+        sh:message "temporalCoverage should have at least one value and be written ISO 8601 format" ;
+    ];
+    sh:property [
+        sh:severity sh:Warning ;
+        sh:path schema:spatialCoverage ;
+        sh:minCount 1 ;
+        sh:message "spatialCoverage should have at least one value" ;
+    ];
+    sh:property [
         sh:severity sh:Violation;
         sh:path schema:license ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
+        sh:message "License must be specified" ;
+        sh:in ( "CC BY" "CC0" "CC BY-SA" "CC BY-ND" "CC BY-NC" "CC BY-NC-SA" "CC BY-NC-ND" ) ;
+    ];
+    sh:property [
+        sh:dateCreated ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ];
+    sh:property [
+        sh:severity sh:Violation;
+        sh:path schema:description ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Description must be specified" ;
+    ];
+    sh:property [
+        sh:severity sh:Violation;
+        sh:path schema:dateModified ;
+        sh:minCount 1 ;
     ];
     sh:property [
         sh:severity sh:Warning;
-        sh:path schema:about ;
+        sh:path bioschema:keywords ;
         sh:minCount 1 ;
-        sh:maxCount 1 ;
-    ]
+    ];
+    sh:property [
+        sh:severity sh:Warning;
+        sh:path schema:creator ;
+        sh:minCount 1 ;
+        sh:nodeShape ex:PersonShape ;
+    ];
+    sh:property [
+        sh:severity sh:Warning;
+        sh:path schema:citation;
+        sh:minCount 1 ;
+    ];
 .
 
 schema:FileShape
     a sh:NodeShape ;
     sh:targetClass schema:File;
+    sh:property [
+        sh:severity sh:Warning;
+        sh:path schema:dateCreated ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ];
+    sh:property [
+        sh:severity sh:Warning;
+        sh:path schema:dateModified ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ];
     sh:property [
         sh:severity sh:Violation;
         sh:path schema:fileFormat ;
@@ -44,17 +98,17 @@ schema:FileShape
     ];
     sh:property [
         sh:severity sh:Violation;
+        sh:minCount 1 ;
+        sh:path schema:author ;
+        sh:node schema:PersonShape ;
+    ];
+    sh:property [
+        sh:severity sh:Violation;
         sh:path schema:license ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
         sh:message "License must be specified" ;
         sh:in ( "CC BY" "CC0" "CC BY-SA" "CC BY-ND" "CC BY-NC" "CC BY-NC-SA" "CC BY-NC-ND" ) ;
-    ];
-    sh:property [
-        sh:severity sh:Warning;
-        sh:path schema:creator ;
-        sh:minCount 1 ;
-        sh:message "Creator must be specified and must be a person" ;
     ];
     sh:rule [
             a sh:TripleRule ;
@@ -100,4 +154,90 @@ schema:CSVFileShape
         sh:path schema:version ;
         sh:minCount 1 ;
     ]
+.
+
+schema:PersonShape
+    a sh:NodeShape ;
+    sh:targetClass schema:Person ;
+    sh:property [
+        sh:severity sh:Violation;
+        sh:path schema:name ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:severity sh:Violation;
+        sh:path schema:email ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:severity sh:Violation;
+        sh:path schema:telephone ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:severity sh:Violation;
+        sh:path schema:affiliation ;
+        sh:node schema:AffiliationShape ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:severity sh:Violation;
+        sh:path schema:affiliation ;
+        sh:node schema:OrganizationShape ;
+    ] ;
+    sh:property [
+        sh:severity sh:Warning;
+        sh:path schema:identifier ;
+        sh:message "Recommended to use an ORCID identifier" ;
+        sh:minCount 1 ;
+    ] ;
+.
+
+schema:AffiliationShape
+    a sh:NodeShape ;
+    sh:targetClass schema:Affiliation ;
+    sh:property [
+        sh:severity sh:Violation;
+        sh:path schema:name ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:severity sh:Warning ;
+        sh:path schema:email ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:severity sh:Warning ;
+        sh:path schema:url ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:severity sh:Violation;
+        sh:path schema:address ;
+        sh:node schema:AddressShape ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path schema:alternateName ;
+    ];
+.
+
+schema:AddressShape
+    a sh:NodeShape ;
+    sh:targetClass schema:Address ;
+    sh:property [
+        sh:severity sh:Violation;
+        sh:path schema:streetAddress ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:severity sh:Violation;
+        sh:path schema:postalCode ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:severity sh:Violation;
+        sh:path schema:addressCountry ;
+        sh:minCount 1 ;
+    ] ;
 .
