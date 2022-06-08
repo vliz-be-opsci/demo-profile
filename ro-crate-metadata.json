@@ -9,6 +9,7 @@
             "@id": "ro-crate-metadata.json",
             "@type": "CreativeWork",
             "hasCrateRepo":"https://github.com/vliz-be-opsci/test_OSD_profilecrate",
+            "hasShaclFile":"https://github.com/vliz-be-opsci/test_OSD_profilecrate/all_constraints.ttl",
             "about": {
                 "@id": "./"
             },
