@@ -35,7 +35,7 @@ schema:DatasetShape
         sh:in ( "CC BY" "CC0" "CC BY-SA" "CC BY-ND" "CC BY-NC" "CC BY-NC-SA" "CC BY-NC-ND" ) ;
     ];
     sh:property [
-        sh:dateCreated ;
+        sh:path schema:dateCreated ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
     ];
