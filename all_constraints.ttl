@@ -99,7 +99,7 @@ schema:FileShape
     sh:property [
         sh:severity sh:Violation;
         sh:minCount 1 ;
-        sh:path schema:author ;
+        sh:path schema:Person ;
         sh:node schema:PersonShape ;
     ];
     sh:property [
@@ -161,7 +161,7 @@ schema:PersonShape
     sh:targetClass schema:Person ;
     sh:property [
         sh:severity sh:Violation;
-        sh:path schema:name ;
+        sh:path schema:givenName ;
         sh:minCount 1 ;
     ] ;
     sh:property [
@@ -170,7 +170,7 @@ schema:PersonShape
         sh:minCount 1 ;
     ] ;
     sh:property [
-        sh:severity sh:Violation;
+        sh:severity sh:Warning;
         sh:path schema:telephone ;
         sh:minCount 1 ;
     ] ;
@@ -182,20 +182,15 @@ schema:PersonShape
     ] ;
     sh:property [
         sh:severity sh:Violation;
-        sh:path schema:affiliation ;
-        sh:node schema:OrganizationShape ;
-    ] ;
-    sh:property [
-        sh:severity sh:Warning;
-        sh:path schema:identifier ;
-        sh:message "Recommended to use an ORCID identifier" ;
+        sh:path schema:address ;
+        sh:node schema:AddressShape ;
         sh:minCount 1 ;
     ] ;
 .
 
 schema:AffiliationShape
     a sh:NodeShape ;
-    sh:targetClass schema:Affiliation ;
+    sh:targetClass schema:Organization ;
     sh:property [
         sh:severity sh:Violation;
         sh:path schema:name ;
@@ -212,29 +207,13 @@ schema:AffiliationShape
         sh:minCount 1 ;
     ] ;
     sh:property [
-        sh:severity sh:Violation;
-        sh:path schema:address ;
-        sh:node schema:AddressShape ;
-        sh:minCount 1 ;
-    ] ;
-    sh:property [
         sh:path schema:alternateName ;
     ];
 .
 
 schema:AddressShape
     a sh:NodeShape ;
-    sh:targetClass schema:Address ;
-    sh:property [
-        sh:severity sh:Violation;
-        sh:path schema:streetAddress ;
-        sh:minCount 1 ;
-    ] ;
-    sh:property [
-        sh:severity sh:Violation;
-        sh:path schema:postalCode ;
-        sh:minCount 1 ;
-    ] ;
+    sh:targetClass schema:PostalAddress ;
     sh:property [
         sh:severity sh:Violation;
         sh:path schema:addressCountry ;
