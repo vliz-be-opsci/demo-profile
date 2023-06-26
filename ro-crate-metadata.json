@@ -1,6 +1,6 @@
 {
     "@context": [
-        "https://w3id.org/ro/crate/1.1/context",
+        "https://w3id.org/ro/crate/1.2-DRAFT/context",
         {"hasShaclFile":"https://example.org/NS/dmbonassistent/hasShaclFile"},
         {"hasCrateRepo":"https://example.org/NS/dmbonassistent/hasCrateRepo"}
     ],
@@ -19,7 +19,7 @@
         },
         {
             "@id": "./",
-            "@type": "Dataset",
+            "@type": ["Dataset","Profile"],
             "hasShaclFile": "all_constraints.ttl",
             "datePublished": "2022-02-08T18:04:04.531904",
             "hasPart": [
