@@ -1,0 +1,36 @@
+{
+    "@context": [
+        "https://w3id.org/ro/crate/1.2-DRAFT/context",
+        {"hasShaclFile":"https://example.org/NS/dmbonassistent/hasShaclFile"},
+        {"hasCrateRepo":"https://example.org/NS/dmbonassistent/hasCrateRepo"}
+    ],
+    "@graph": [
+        {
+            "@id": "ro-crate-metadata.json",
+            "@type": "CreativeWork",
+            "hasCrateRepo":"https://github.com/vliz-be-opsci/test_OSD_profilecrate",
+            "hasShaclFile":"https://github.com/vliz-be-opsci/test_OSD_profilecrate/all_constraints.ttl",
+            "about": {
+                "@id": "./"
+            },
+            "conformsTo": {
+                "@id": "https://www.researchobject.org/ro-crate/1.2-DRAFT/profiles"
+            }
+        },
+        {
+            "@id": "./",
+            "@type": ["Dataset","Profile"],
+            "hasShaclFile": "all_constraints.ttl",
+            "datePublished": "2022-02-08T18:04:04.531904",
+            "hasPart": [
+                {
+                    "@id": "all_constraints.ttl"
+                }
+            ]
+        },
+        {
+            "@id": "all_constraints.ttl",
+            "@type": "File"
+        }
+    ]
+}
